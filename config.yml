@@ -1,0 +1,8 @@
+default:
+  weeks: 1
+  
+test:
+  weeks: 6
+
+
+  
