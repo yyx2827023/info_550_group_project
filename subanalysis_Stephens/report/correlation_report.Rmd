@@ -6,13 +6,23 @@ output: html_document
 
 ```{r, set-chunk-opts, echo = FALSE}
 library(knitr)
+library("ggpubr")
 opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE
 )
 ```
+
+```{r}
+WHICH_CONFIG<-Sys.getenv("WHICH_CONFIG")  
+
+config_list <- config::get(
+  config = WHICH_CONFIG
+)
+```
+
 ## Introduction
 
-This report examines the correlation between lecture video length and engagement in class. Engagement will be measured by the number of views on each video. 
+This report examines the correlation between lecture video length and engagement in class before week `r config_list$week`. Engagement will be measured by the number of views on each video. 
 
 ## Reading the Data
 
@@ -32,16 +42,36 @@ video lecture length.
 ```{r, plot-data}
 #| fig.align = "center",
 #| out.width = "800px"
+
+#config paramter
+WHICH_CONFIG<-Sys.getenv("WHICH_CONFIG")  
+
+config_list <- config::get(
+  config = WHICH_CONFIG
+)
+
+scatter_filename <- paste0(
+  "scatter_before_",
+  config_list$week,
+  "weeks",
+  ".rds"
+)
+
 readRDS(
-  here::here("subanalysis_Stephens/output/scatter.rds")
+  here::here("subanalysis_Stephens/output",scatter_filename)
 )
 ```
 ```{r, pearson}
+pearson_filename <- paste0("pearson_correlation_before",
+                           config_list$week,
+                           "weeks",
+                           ".rds")
+
 readRDS(
-  file = here::here("subanalysis_Stephens/output/pearson.rds")
+  file = here::here("subanalysis_Stephens/output/",pearson_filename)
 )
 ```
 
 ## Conclusion
 
-Since the p-value is less than 0.05, we can conclude that there is no association between length of lecture video and the class engagement measured by views. 
+Since the p-value is less than 0.05, we can conclude that there is no association between length of lecture video and the class engagement measured by views before week `r config_list$week`. 

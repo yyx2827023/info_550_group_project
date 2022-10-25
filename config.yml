@@ -1,5 +1,5 @@
 default:
-  weeks: 1
+  weeks: 3
   
 test:
   weeks: 6
